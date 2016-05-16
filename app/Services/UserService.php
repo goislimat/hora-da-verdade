@@ -51,6 +51,15 @@ class UserService
         //envia e-mail com usuário e senha
     }
 
+    public function show($id)
+    {
+        $usuario = $this->userRepository->find($id);
+
+        $usuario->tipo = $this->getTipoComoTexto($usuario->tipo);
+
+        return $usuario;
+    }
+
     public function buscar($campo, $valor)
     {
         if($valor == null)

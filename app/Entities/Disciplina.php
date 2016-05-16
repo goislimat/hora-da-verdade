@@ -6,22 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
-class Curso extends Model implements Transformable
+class Disciplina extends Model implements Transformable
 {
     use TransformableTrait;
 
     protected $fillable = [
         'nome',
-        'tipo',
+        'semestre',
+        'curso_id',
     ];
 
-    public function usuarios()
+    public function curso()
     {
-        return $this->hasMany(User::class);
-    }
-
-    public function disciplinas()
-    {
-        return $this->hasMany(Disciplina::class);
+        return $this->belongsTo(Curso::class);
     }
 }

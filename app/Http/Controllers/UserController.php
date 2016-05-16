@@ -2,6 +2,7 @@
 
 namespace Verdade\Http\Controllers;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 use Verdade\Http\Requests;
@@ -83,7 +84,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $usuario = $this->userService->show($id);
+
+        return view('usuario.mostrar', compact('usuario'));
     }
 
     /**
@@ -94,7 +97,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usuario = $this->userRepository->find($id);
+        $cursos = $this->cursoRepository->lists('nome', 'id');
+
+        return view('usuario.editar', compact('usuario', 'cursos'));
     }
 
     /**
@@ -106,7 +112,9 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
-        //
+        $this->userRepository->update($request->all(), $id);
+
+        return redirect()->route('index.usuario');
     }
 
     /**
@@ -117,7 +125,27 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try
+        {
+            $this->userRepository->delete($id);
+
+            return redirect()->route('index.usuario');
+        }
+        catch(QueryException $e)
+        {
+            $usuario = $this->userService->show($id);
+
+            $erro = [
+                'mensagem' => 'Esse usuário bloqueou a exclusão pela existência de dependências',
+                'solucao' => [
+                    'A exclusão desse item, somente será possível após a exclusão de suas dependências',
+                    'Para excluir suas dependências, exclua todos as disciplinas e provas exibidas nas listas abaixo',
+                    'Para exclusão em massa, contacte o administrador do sistema'
+                ]
+            ];
+
+            return view('usuario.mostrar', compact('usuario', 'erro'));
+        }
     }
 
     public function buscar(Request $request)

@@ -35,3 +35,11 @@ $factory->define(Verdade\Entities\Curso::class, function (Faker\Generator $faker
         'tipo' => $faker->numberBetween(1, 4),
     ];
 });
+
+$factory->define(Verdade\Entities\Disciplina::class, function (Faker\Generator $faker) {
+    return [
+        'nome' => $faker->words(4, true),
+        'semeste' => $faker->numberBetween(1, 10),
+        'curso_id' => \Verdade\Entities\Curso::all()->random()->id,
+    ];
+});
