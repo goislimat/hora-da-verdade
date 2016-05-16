@@ -38,6 +38,17 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('{curso}', ['uses' => 'CursoController@destroy', 'as' => 'excluir.curso']);
         Route::post('buscar', ['uses' => 'CursoController@buscar', 'as' => 'buscar.curso']);
     });
+    
+    Route::group(['prefix' => 'disciplina'], function() {
+        Route::get('', ['uses' => 'DisciplinaController@index', 'as' => 'index.disciplina']);
+        Route::get('novo', ['uses' => 'DisciplinaController@create', 'as' => 'novo.disciplina']);
+        Route::post('', ['uses' => 'DisciplinaController@store', 'as' => 'armazenar.disciplina']);
+        Route::get('{disciplina}', ['uses' => 'DisciplinaController@show', 'as' => 'mostrar.disciplina']);
+        Route::get('{disciplina}/editar', ['uses' => 'DisciplinaController@edit', 'as' => 'editar.disciplina']);
+        Route::put('{disciplina}', ['uses' => 'DisciplinaController@update', 'as' => 'atualizar.disciplina']);
+        Route::delete('{disciplina}', ['uses' => 'DisciplinaController@destroy', 'as' => 'excluir.disciplina']);
+        Route::post('buscar', ['uses' => 'DisciplinaController@buscar', 'as' => 'buscar.disciplina']);
+    });
 
 });
 

@@ -44,6 +44,7 @@
                         <li><a href="{{ url('/home') }}">Home</a></li>
                         <li><a href="{{ route('index.curso') }}">Cursos</a></li>
                         <li><a href="{{ route('index.usuario') }}">Usuários</a></li>
+                        <li><a href="{{ route('index.disciplina') }}">Disciplinas</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
