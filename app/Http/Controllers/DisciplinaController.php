@@ -5,15 +5,37 @@ namespace Verdade\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Verdade\Http\Requests;
+use Verdade\Http\Requests\DisciplinaRequest;
+use Verdade\Repositories\CursoRepository;
 use Verdade\Repositories\DisciplinaRepository;
+use Verdade\Services\DisciplinaService;
 
 class DisciplinaController extends Controller
 {
+    /**
+     * @var DisciplinaRepository
+     */
     private $disciplinaRepository;
-    
-    public function __construct(DisciplinaRepository $disciplinaRepository)
+    /**
+     * @var DisciplinaService
+     */
+    private $disciplinaService;
+    /**
+     * @var CursoRepository
+     */
+    private $cursoRepository;
+
+    /**
+     * DisciplinaController constructor.
+     * @param DisciplinaRepository $disciplinaRepository
+     * @param DisciplinaService $disciplinaService
+     * @param CursoRepository $cursoRepository
+     */
+    public function __construct(DisciplinaRepository $disciplinaRepository, DisciplinaService $disciplinaService, CursoRepository $cursoRepository)
     {
         $this->disciplinaRepository = $disciplinaRepository;
+        $this->disciplinaService = $disciplinaService;
+        $this->cursoRepository = $cursoRepository;
     }
     
     /**
@@ -35,18 +57,22 @@ class DisciplinaController extends Controller
      */
     public function create()
     {
-        //
+        $cursos = $this->cursoRepository->lists('nome', 'id');
+
+        return view('disciplina.novo', compact('cursos'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request|DisciplinaRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DisciplinaRequest $request)
     {
-        //
+        $this->disciplinaRepository->create($request->all());
+
+        return redirect()->route('index.disciplina');
     }
 
     /**
@@ -57,7 +83,9 @@ class DisciplinaController extends Controller
      */
     public function show($id)
     {
-        //
+        $disciplina = $this->disciplinaRepository->find($id);
+
+        return view('disciplina.mostrar', compact('disciplina'));
     }
 
     /**
@@ -68,19 +96,24 @@ class DisciplinaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $disciplina = $this->disciplinaRepository->find($id);
+        $cursos = $this->cursoRepository->lists('nome', 'id');
+
+        return view('disciplina.editar', compact('disciplina', 'cursos'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param Request|DisciplinaRequest $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DisciplinaRequest $request, $id)
     {
-        //
+        $this->disciplinaRepository->update($request->all(), $id);
+
+        return redirect()->route('index.disciplina');
     }
 
     /**
@@ -91,11 +124,15 @@ class DisciplinaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->disciplinaRepository->delete($id);
+
+        return redirect()->route('index.disciplina');
     }
     
     public function buscar(Request $request)
     {
-        
+        $disciplinas = $this->disciplinaService->buscar($request->campo, $request->valor);
+
+        return view('disciplina.index', compact('disciplinas'));
     }
 }

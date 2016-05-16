@@ -32,5 +32,10 @@ class VerdadeRepositoryProvider extends ServiceProvider
             \Verdade\Repositories\CursoRepository::class,
             \Verdade\Repositories\CursoRepositoryEloquent::class
         );
+
+        $this->app->bind(
+            \Verdade\Repositories\DisciplinaRepository::class,
+            \Verdade\Repositories\DisciplinaRepositoryEloquent::class
+        );
     }
 }

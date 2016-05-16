@@ -28,4 +28,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Curso::class);
     }
+
+    public function disciplinas()
+    {
+        return $this->belongsToMany(Disciplina::class, 'aluno_disciplinas', 'user_id', 'disciplina_id')->withPivot('periodo');
+    }
 }
