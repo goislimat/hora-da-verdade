@@ -2,29 +2,18 @@
 
 @section('content')
 
-    <div class="col-md-offset-1 col-md-10 row">
-        {{ Form::open(array('route' => array('buscar.curso'), 'method' => 'post', 'class' => 'form-horizontal')) }}
-        <div class="form-group col-md-4">
-            {{ Form::select('campo', array('nome' => 'nome', 'tipo' => 'tipo'), 'nome', array('class' => 'form-control')) }}
-        </div>
-
-        <div class="form-group col-md-6 ">
-            {{ Form::text('valor', null, array('class' => 'form-control col-md-9', 'placeholder' => 'A busca diferencia acentuação e letras maiúsculas')) }}
-        </div>
-
-        <div class="form-group col-md-2">
-            <button class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Pesquisar
-            </button>
-        </div>
-        {{ Form::close() }}
+    <div class="text-right">
+        {{ link_to_route('novo.curso', 'Adicionar Curso', array(), array('class' => 'btn btn-primary')) }}
     </div>
 
     <div class="grupo clearfix">
         <a href="{{ route('index.curso') }}" class="btn btn-link fonte-vinho"><h2>Lista de Cursos</h2></a>
+
+        @include('curso.helpers._form_busca')
+
         @if(isset($cursos['erro']))
             <div class="bg-danger clearfix">
-                <p>A consulta realizada não retornou nenhum resultado</p>
+                <p>{{ $cursos['erro'] }}</p>
             </div>
         @else
 

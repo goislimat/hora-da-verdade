@@ -20,7 +20,7 @@ $factory->define(Verdade\Entities\User::class, function (Faker\Generator $faker)
         'tipo' => $faker->numberBetween(1, 3),
     ];
 
-    if($hash['tipo'] == 1)
+    if($hash['tipo'] == 3)
     {
         $hash['curso_id'] = Verdade\Entities\Curso::all()->random()->id;
     }

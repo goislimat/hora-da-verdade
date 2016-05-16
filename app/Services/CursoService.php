@@ -9,6 +9,8 @@
 namespace Verdade\Services;
 
 
+use Illuminate\Http\Response;
+use Prettus\Validator\Exceptions\ValidatorException;
 use Verdade\Repositories\CursoRepository;
 
 class CursoService
@@ -27,6 +29,9 @@ class CursoService
         $this->cursoRepository = $cursoRepository;
     }
 
+    /**
+     * @return array|mixed
+     */
     public function index()
     {
         $cursos = $this->cursoRepository->all();
@@ -36,11 +41,31 @@ class CursoService
             $curso->tipo = $this->getTipoCursoComoTexto($curso->tipo);
         }
 
-        return $cursos;
+        if(count($cursos) > 0)
+            return $cursos;
+        else
+            return ['erro' => 'Ainda não há nenhum curso cadastrado no sistema.'];
     }
 
+    public function show($id)
+    {
+        $curso = $this->cursoRepository->find($id);
+
+        $curso->tipo = $this->getTipoCursoComoTexto($curso->tipo);
+
+        return $curso;
+    }
+
+    /**
+     * @param $campo
+     * @param $valor
+     * @return array|mixed
+     */
     public function buscar($campo, $valor)
     {
+        if($valor == null)
+            return ['erro' => 'A consulta realizada não retornor nenhum resultado.'];
+
         if($campo == 'nome')
             $cursos = $this->cursoRepository->findWhere([[$campo, 'like', '%'.$valor.'%']]);
         else
@@ -57,7 +82,7 @@ class CursoService
         if(count($cursos) > 0)
             return $cursos;
         else
-            return ['erro' => 'consulta sem resultados'];
+            return ['erro' => 'A consulta realizada não retornor nenhum resultado.'];
     }
 
     private function getTipoCursoComoTexto($tipo)
