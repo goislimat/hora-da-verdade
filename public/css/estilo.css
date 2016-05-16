@@ -15,8 +15,8 @@ body {
 /** MENU DE NAVEGAÇÃO **/
 /* navbar */
 .navbar-default {
-    background-color: #35262d;
-    border-color: #a4b7bb;
+    background-color: #037e8c;
+    border-color: #024959;
     border-bottom: 3px solid;
 }
 
@@ -24,24 +24,24 @@ body {
 .navbar-default .navbar-brand {
     padding-left: 20px;
     padding-right: 60px;
-    color: #fffbff;
+    color: #F2EFDC;
     transition: all .5s;
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-    color: #a4b7bb;
+    color: #F24C27;
 }
 
 /* link */
 .navbar-default .navbar-nav > li > a {
-    color: #ecf0f1;
-    border-bottom: 1px solid #35262d;
+    color: #F2EFDC;
+    border-bottom: 1px solid #037e8c;
     transition: border-bottom .5s;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-    color: #ecf0f1;
-    border-bottom: 1px solid #ecf0f1;
+    color: #F2EFDC;
+    border-bottom: 1px solid #F2EFDC;
 }
 /** FIM DO MENU DE NAVEGAÇÃO **/
 
@@ -54,9 +54,9 @@ body {
 }
 
 .bg-danger {
-    background-color: #c0392b !important;
+    background-color: #F24C27 !important;
     padding: 20px;
-    color: #fffbff;
+    color: #F2EFDC;
 }
 
 a:hover {
@@ -64,7 +64,11 @@ a:hover {
 }
 
 .fonte-vinho {
-    color: #35262d !important;
+    color: #F24C27 !important;
+}
+
+.fonte-verde {
+    color: #024959 !important;
 }
 
 .clearfix {
@@ -83,12 +87,13 @@ a:hover {
 }
 .site-footer, .page-wrap:after {
     height: 220px;
+    margin-top: 50px;
 }
 
 .site-footer {
     text-align: center;
-    background-color: #e8eced;
-    color: #030303;
+    background-color: #404040;
+    color: #F2EFDC;
 }
 
 .footer-content {

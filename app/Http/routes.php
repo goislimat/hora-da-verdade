@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('{usuario}/editar', ['uses' => 'UserController@edit', 'as' => 'editar.usuario']);
         Route::put('{usuario}', ['uses' => 'UserController@update', 'as' => 'atualizar.usuario']);
         Route::delete('{usuario}', ['uses' => 'UserController@delete', 'as' => 'excluir.usuario']);
+        Route::post('buscar', ['uses' => 'UserController@buscar', 'as' => 'buscar.usuario']);
     });
 
     Route::group(['prefix' => 'curso'], function() {

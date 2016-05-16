@@ -50,7 +50,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (!Auth::guest())
-                            <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                            <li><a href="{{ url('/logout') }}">Sair <i class="fa fa-btn fa-sign-out fonte-vinho"></i></a></li>
                         @endif
                     </ul>
                 </div>
@@ -70,20 +70,17 @@
                     <p>Peça login à um professor e tenha acesso ao Hora da Verdade</p>
                 @else
                     <div class="dados-conexao">
-                        <h4>Dados de Conexão</h4>
+                        <h4 class="fonte-verde">Dados de Conexão</h4>
 
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <h5 class="list-group-item-heading">Usuário:</h5>
-                                <p class="list-group-item-text text-right">{{ Auth::user()->nome }}</p>
+                                <strong class="fonte-verde">Usuário: </strong>{{ Auth::user()->nome }}
                             </li>
                             <li class="list-group-item">
-                                <h5 class="list-group-item-heading">E-mail:</h5>
-                                <p class="list-group-item-text text-right">{{ Auth::user()->email }}</p>
+                                <strong class="fonte-verde">E-mail: </strong>{{ Auth::user()->email }}
                             </li>
                             <li class="list-group-item">
-                                <h5 class="list-group-item-heading">Tipo de Usuário:</h5>
-                                <p class="list-group-item-text text-right">
+                                <strong class="fonte-verde">Tipo de Usuário: </strong>
                                     @if(Auth::user()->tipo == 1)
                                         Administrador
                                     @elseif(Auth::user()->tipo == 1)
@@ -91,11 +88,9 @@
                                     @else
                                         Aluno
                                     @endif
-                                </p>
                             </li>
                             <li class="list-group-item">
-                                <h5 class="list-group-item-heading">Endereço de IP:</h5>
-                                <p class="list-group-item-text text-right">{{ Request::ip() }}</p>
+                                <strong class="fonte-verde">Endereço de IP: </strong>{{ Request::ip() }}
                             </li>
                         </ul>
                     </div>

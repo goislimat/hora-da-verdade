@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="text-right">
-        {{ link_to_route('novo.curso', 'Adicionar Curso', array(), array('class' => 'btn btn-primary')) }}
+        <a href="{{ route('novo.curso') }}" class="btn btn-link fonte-verde"><span class="glyphicon glyphicon-plus"></span> Adicionar</a>
     </div>
 
     <div class="grupo clearfix">

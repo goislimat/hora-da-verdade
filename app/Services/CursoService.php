@@ -64,7 +64,7 @@ class CursoService
     public function buscar($campo, $valor)
     {
         if($valor == null)
-            return ['erro' => 'A consulta realizada não retornor nenhum resultado.'];
+            return ['erro' => 'A consulta realizada não retornou nenhum resultado.'];
 
         if($campo == 'nome')
             $cursos = $this->cursoRepository->findWhere([[$campo, 'like', '%'.$valor.'%']]);
@@ -82,7 +82,7 @@ class CursoService
         if(count($cursos) > 0)
             return $cursos;
         else
-            return ['erro' => 'A consulta realizada não retornor nenhum resultado.'];
+            return ['erro' => 'A consulta realizada não retornou nenhum resultado.'];
     }
 
     private function getTipoCursoComoTexto($tipo)

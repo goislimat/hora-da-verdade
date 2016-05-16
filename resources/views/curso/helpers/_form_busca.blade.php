@@ -1,7 +1,7 @@
 <div class="col-md-offset-1 col-md-10 row">
     {{ Form::open(array('route' => array('buscar.curso'), 'method' => 'post', 'class' => 'form-horizontal')) }}
     <div class="form-group col-md-7">
-        {{ Form::text('valor', null, array('class' => 'form-control col-md-9', 'placeholder' => 'A busca diferencia acentuação e letras maiúsculas')) }}
+        {{ Form::text('valor', null, array('class' => 'form-control', 'placeholder' => 'A busca diferencia acentuação e letras maiúsculas')) }}
     </div>
 
     <div class="form-group col-md-3">

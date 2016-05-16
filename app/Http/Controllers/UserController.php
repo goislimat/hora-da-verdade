@@ -5,7 +5,10 @@ namespace Verdade\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Verdade\Http\Requests;
+use Verdade\Http\Requests\UserRequest;
+use Verdade\Repositories\CursoRepository;
 use Verdade\Repositories\UserRepository;
+use Verdade\Services\UserService;
 
 class UserController extends Controller
 {
@@ -13,14 +16,26 @@ class UserController extends Controller
      * @var UserRepository
      */
     private $userRepository;
+    /**
+     * @var UserService
+     */
+    private $userService;
+    /**
+     * @var CursoRepository
+     */
+    private $cursoRepository;
 
     /**
      * UserController constructor.
      * @param UserRepository $userRepository
+     * @param UserService $userService
+     * @param CursoRepository $cursoRepository
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, UserService $userService, CursoRepository $cursoRepository)
     {
         $this->userRepository = $userRepository;
+        $this->userService = $userService;
+        $this->cursoRepository = $cursoRepository;
     }
 
     /**
@@ -30,7 +45,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios = $this->userRepository->all();
+        $usuarios = $this->userService->index();
 
         return view('usuario.index', compact('usuarios'));
     }
@@ -42,18 +57,22 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $cursos = $this->cursoRepository->lists('nome', 'id');
+
+        return view('usuario.novo', compact('cursos'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request|UserRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $this->userService->store($request->all());
+
+        return redirect()->route('index.usuario');
     }
 
     /**
@@ -81,11 +100,11 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param Request|UserRequest $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         //
     }
@@ -99,5 +118,12 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function buscar(Request $request)
+    {
+        $usuarios = $this->userService->buscar($request->campo, $request->valor);
+
+        return view('usuario.index', compact('usuarios'));
     }
 }

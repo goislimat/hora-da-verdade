@@ -21,8 +21,9 @@
     </div>
 
     <div class="form-group text-right">
-        {{ Form::submit('Concluir', array('class' => 'btn btn-primary')) }}
-        {{ link_to_route('index.curso', 'Cancelar', array(), array('class' => 'btn btn-danger btn-sm')) }}
+        <button class="btn btn-link text-primary">
+            <span class="glyphicon glyphicon-ok"></span> Concluir
+        </button>
     </div>
 
     {{ Form::close() }}
