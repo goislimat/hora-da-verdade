@@ -43,3 +43,15 @@ $factory->define(Verdade\Entities\Disciplina::class, function (Faker\Generator $
         'curso_id' => \Verdade\Entities\Curso::all()->random()->id,
     ];
 });
+
+$factory->define(Verdade\Entities\Prova::class, function (Faker\Generator $faker) {
+    return [
+        'disciplina_id' => \Verdade\Entities\Disciplina::all()->random()->id,
+        'titulo' => $faker->word(2, true),
+        'data' => $faker->date('Y-m-d', '+2 months'),
+        'hora_inicio' => $faker->time(),
+        'hora_final' => $faker->time(),
+        'pontuacao' => $faker->numberBetween(1, 30),
+        'notificar' => $faker->boolean(75),
+    ];
+});

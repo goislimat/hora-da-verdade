@@ -48,6 +48,14 @@ Route::group(['middleware' => 'auth'], function() {
         Route::put('{disciplina}', ['uses' => 'DisciplinaController@update', 'as' => 'atualizar.disciplina']);
         Route::delete('{disciplina}', ['uses' => 'DisciplinaController@destroy', 'as' => 'excluir.disciplina']);
         Route::post('buscar', ['uses' => 'DisciplinaController@buscar', 'as' => 'buscar.disciplina']);
+
+        Route::get('{disciplina}/prova', ['uses' => 'ProvaController@index', 'as' => 'index.prova']);
+        Route::get('{disciplina}/prova/novo', ['uses' => 'ProvaController@create', 'as' => 'novo.prova']);
+        Route::post('{disciplina}/prova', ['uses' => 'ProvaController@store', 'as' => 'armazenar.prova']);
+        Route::get('{disciplina}/prova/{prova}', ['uses' => 'ProvaController@show', 'as' => 'mostrar.prova']);
+        Route::get('{disciplina}/prova/{prova}/editar', ['uses' => 'ProvaController@edit', 'as' => 'editar.prova']);
+        Route::put('{disciplina}/prova/{prova}', ['uses' => 'ProvaController@update', 'as' => 'atualizar.prova']);
+        Route::delete('{disciplina}/prova/{prova}', ['uses' => 'ProvaController@destroy', 'as' => 'excluir.prova']);
     });
 
 });
