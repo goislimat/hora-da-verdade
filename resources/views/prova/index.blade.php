@@ -30,7 +30,7 @@
                 @foreach($provas as $prova)
                     <tr>
                         <td><span class="glyphicon glyphicon-link"></span> {{ link_to_route('mostrar.prova', $prova->titulo, array($disciplina->id, $prova->id)) }}</td>
-                        <td>{{ date_format(date_create($prova->data), 'd-m-Y') }}</td>
+                        <td>{{ date_format(date_create($prova->data), 'd/m/Y') }}</td>
                         <td>{{ $prova->hora_inicio }}</td>
                         <td>{{ $prova->pontuacao }}</td>
                     </tr>

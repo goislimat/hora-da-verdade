@@ -127,7 +127,7 @@
 
     <!-- Scripts from third part -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
-    <!-- <script src="{{-- asset('js/jquery.mask.min.js') --}}"></script> -->
+    <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     <!-- <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script> -->
     <!-- <script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script> -->
 

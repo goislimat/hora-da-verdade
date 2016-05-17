@@ -2,8 +2,8 @@
 
 @section('content')
 
-    <h2 class="text-center">Cadastrar Curso</h2>
+    <h2 class="text-center">Cadastrar Prova</h2>
 
-    @include('curso.helpers._form')
+    @include('prova.helpers._form')
 
 @endsection

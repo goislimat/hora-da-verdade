@@ -2,11 +2,13 @@
 
 namespace Verdade\Http\Controllers;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 use Verdade\Http\Requests;
 use Verdade\Repositories\DisciplinaRepository;
 use Verdade\Repositories\ProvaRepository;
+use Verdade\Services\ProvaService;
 
 class ProvaController extends Controller
 {
@@ -18,16 +20,22 @@ class ProvaController extends Controller
      * @var DisciplinaRepository
      */
     private $disciplinaRepository;
+    /**
+     * @var ProvaService
+     */
+    private $provaService;
 
     /**
      * ProvaController constructor.
      * @param ProvaRepository $provaRepository
      * @param DisciplinaRepository $disciplinaRepository
+     * @param ProvaService $provaService
      */
-    public function __construct(ProvaRepository $provaRepository, DisciplinaRepository $disciplinaRepository)
+    public function __construct(ProvaRepository $provaRepository, DisciplinaRepository $disciplinaRepository, ProvaService $provaService)
     {
         $this->provaRepository = $provaRepository;
         $this->disciplinaRepository = $disciplinaRepository;
+        $this->provaService = $provaService;
     }
 
     /**
@@ -48,9 +56,11 @@ class ProvaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($disciplinaId)
     {
-        //
+        $disciplina = $this->disciplinaRepository->find($disciplinaId);
+
+        return view('prova.novo', compact('disciplina'));
     }
 
     /**
@@ -59,9 +69,11 @@ class ProvaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $disciplinaId)
     {
-        //
+        $this->provaService->store($request->all());
+
+        return redirect()->route('index.prova', $disciplinaId);
     }
 
     /**
@@ -70,9 +82,12 @@ class ProvaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($disciplinaId, $id)
     {
-        //
+        $prova = $this->provaRepository->find($id);
+        $disciplina = $this->disciplinaRepository->find($disciplinaId);
+
+        return view('prova.mostrar', compact('prova', 'disciplina'));
     }
 
     /**
@@ -81,9 +96,12 @@ class ProvaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($disciplinaId, $id)
     {
-        //
+        $prova = $this->provaService->edit($id);
+        $disciplina = $this->disciplinaRepository->find($disciplinaId);
+
+        return view('prova.editar', compact('prova', 'disciplina'));
     }
 
     /**
@@ -93,9 +111,11 @@ class ProvaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $disciplinaId, $id)
     {
-        //
+        $this->provaService->update($request->all(), $id);
+
+        return redirect()->route('mostrar.prova', array($disciplinaId, $id));
     }
 
     /**
@@ -104,8 +124,28 @@ class ProvaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($disciplinaId, $id)
     {
-        //
+        try
+        {
+            $this->provaRepository->delete($id);
+
+            return redirect()->route('index.prova', $disciplinaId);
+        }
+        catch(QueryException $e)
+        {
+            $prova = $this->provaRepository->find($id);
+
+            $erro = [
+                'mensagem' => 'Essa prova bloqueou a exclusão pela existência de dependências',
+                'solucao' => [
+                    'A exclusão desse item, somente será possível após a exclusão de suas dependências',
+                    'Para excluir suas dependências, exclua todos os vínculos de alunos com essa prova',
+                    'Para exclusão em massa, contacte o administrador do sistema'
+                ]
+            ];
+
+            return view('prova.mostrar', compact('prova', 'erro'));
+        }
     }
 }

@@ -45,7 +45,7 @@ $factory->define(Verdade\Entities\Disciplina::class, function (Faker\Generator $
 });
 
 $factory->define(Verdade\Entities\Prova::class, function (Faker\Generator $faker) {
-    return [
+    $hash = [
         'disciplina_id' => \Verdade\Entities\Disciplina::all()->random()->id,
         'titulo' => $faker->word(2, true),
         'data' => $faker->date('Y-m-d', '+2 months'),
@@ -54,4 +54,9 @@ $factory->define(Verdade\Entities\Prova::class, function (Faker\Generator $faker
         'pontuacao' => $faker->numberBetween(1, 30),
         'notificar' => $faker->boolean(75),
     ];
+
+    if($hash['notificar'])
+        $hash['momento_notificacao'] = $faker->dateTimeBetween('now', '+2 months');
+
+    return $hash;
 });

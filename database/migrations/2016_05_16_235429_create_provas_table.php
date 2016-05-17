@@ -24,6 +24,7 @@ class CreateProvasTable extends Migration
 			$table->time('hora_final');
 			$table->float('pontuacao');
 			$table->boolean('notificar');
+			$table->dateTime('momento_notificacao')->nullable();
 
             $table->timestamps();
 		});
