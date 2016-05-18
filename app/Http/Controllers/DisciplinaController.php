@@ -55,8 +55,19 @@ class DisciplinaController extends Controller
             $disciplinas = $this->disciplinaRepository->all();
         else
         {
+            /*
+             * Esse trecho tá com cara de gambiarra
+             *
+             * */
+            session()->forget('user');
+            session()->put('user', \Illuminate\Support\Facades\Auth::user());
+
             $user = session()->get('user');
-            $disciplinas = $user->disciplinasUsuarioNoSemestre;
+
+            $disciplinas = $user->disciplinasNoSemestre;
+
+            if(count($disciplinas) == 0)
+                session()->flash('erro', 'Este usuário ainda não foi vinculado a nenhuma disciplina.');
         }
 
         return view('disciplina.index', compact('disciplinas'));

@@ -15,12 +15,11 @@
             @include('disciplina.helpers._form_busca')
         @endif
 
-        @if(isset($disciplinas['erro']))
+        @if(session()->has('erro'))
             <div class="bg-danger clearfix">
-                <p>{{ $disciplinas['erro'] }}</p>
+                <p>{{ session()->pull('erro') }}</p>
             </div>
         @else
-
             <table class="table table-condensed table-hover">
                 <thead>
                 <tr>
@@ -39,7 +38,6 @@
                 @endforeach
                 </tbody>
             </table>
-
         @endif
     </div>
 

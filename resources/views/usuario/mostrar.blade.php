@@ -28,9 +28,7 @@
     <h5>{{ $usuario->tipo }} {{ (isset($usuario->curso_id)) ? ' do curso de '.$usuario->curso->nome : '' }}</h5>
 
     <hr>
-
-    <p>quaisquer tabelas adicionais</p>
-
+    @include('usuario._disciplinas')
     <hr>
 
     @include('usuario.helpers._manutencao')

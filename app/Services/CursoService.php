@@ -44,7 +44,10 @@ class CursoService
         if(count($cursos) > 0)
             return $cursos;
         else
-            return ['erro' => 'Ainda não há nenhum curso cadastrado no sistema.'];
+        {
+            session()->flash('erro', 'Ainda não há nenhum curso cadastrado no sistema.');
+            return null;
+        }
     }
 
     public function show($id)
@@ -64,7 +67,10 @@ class CursoService
     public function buscar($campo, $valor)
     {
         if($valor == null)
-            return ['erro' => 'A consulta realizada não retornou nenhum resultado.'];
+        {
+            session()->flash('erro', 'A consulta realizada não retornou nenhum resultado.');
+            return null;
+        }
 
         if($campo == 'nome')
             $cursos = $this->cursoRepository->findWhere([[$campo, 'like', '%'.$valor.'%']]);
@@ -82,7 +88,10 @@ class CursoService
         if(count($cursos) > 0)
             return $cursos;
         else
-            return ['erro' => 'A consulta realizada não retornou nenhum resultado.'];
+        {
+            session()->flash('erro', 'A consulta realizada não retornou nenhum resultado.');
+            return null;
+        }
     }
 
     private function getTipoCursoComoTexto($tipo)

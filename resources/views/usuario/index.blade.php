@@ -11,9 +11,9 @@
 
         @include('usuario.helpers._form_busca')
 
-        @if(isset($usuarios['erro']))
+        @if(session()->has('erro'))
             <div class="bg-danger clearfix">
-                <p>{{ $usuarios['erro'] }}</p>
+                <p>{{ session()->pull('erro') }}</p>
             </div>
         @else
 

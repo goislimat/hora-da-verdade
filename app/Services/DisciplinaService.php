@@ -60,7 +60,11 @@ class DisciplinaService
     public function buscar($campo, $valor)
     {
         if($valor == null)
-            return ['erro' => 'A consulta realizada não retornou nenhum resultado.'];
+        {
+            session()->flash('erro', 'A consulta realizada não retornou nenhum resultado.');
+            return null;
+        }
+
 
         if($campo == 'nome')
             $disciplinas = $this->disciplinaRepository->findWhere([[$campo, 'like', '%'.$valor.'%']]);
@@ -70,7 +74,10 @@ class DisciplinaService
         if(count($disciplinas) > 0)
             return $disciplinas;
         else
-            return ['erro' => 'A consulta realizada não retornou nenhum resultado.'];
+        {
+            session()->flash('erro', 'A consulta realizada não retornou nenhum resultado.');
+            return null;
+        }
     }
 
     public function professores($id)

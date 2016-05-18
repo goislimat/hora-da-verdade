@@ -25,4 +25,9 @@ class Prova extends Model implements Transformable
         return $this->belongsTo(Disciplina::class);
     }
 
+    public function questoes()
+    {
+        return $this->hasMany(Questao::class);
+    }
+
 }

@@ -39,7 +39,10 @@ class UserService
         if(count($usuarios) > 0)
             return $usuarios;
         else
-            return ['erro' => 'Ainda não há nenhum curso cadastrado no sistema.'];
+        {
+            session()->flash('erro', 'Ainda não há nenhum usuário cadastrado no sistema.');
+            return null;
+        }
     }
 
     public function store($data)
@@ -63,7 +66,10 @@ class UserService
     public function buscar($campo, $valor)
     {
         if($valor == null)
-            return ['erro' => 'A consulta realizada não retornou nenhum resultado.'];
+        {
+            session()->flash('erro', 'A consulta realizada não retornou nenhum resultado.');
+            return null;
+        }
 
         if($campo == 'nome' || $campo == 'email')
             $usuarios = $this->userRepository->findWhere([[$campo, 'like', '%'.$valor.'%']]);
@@ -81,7 +87,10 @@ class UserService
         if(count($usuarios) > 0)
             return $usuarios;
         else
-            return ['erro' => 'A consulta realizada não retornou nenhum resultado.'];
+        {
+            session()->flash('erro', 'A consulta realizada não retornou nenhum resultado.');
+            return null;
+        }
     }
 
     private function getTipoComoTexto($tipo)
