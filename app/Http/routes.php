@@ -67,6 +67,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('{disciplina}/matricular', ['uses' => 'MatriculaController@matricularAluno', 'as' => 'matricular.aluno']);
         Route::get('{disciplina}/vincular', ['uses' => 'MatriculaController@vincularProfessor', 'as' => 'vincular.professor']);
         Route::post('{disciplina}/vincular', ['uses' => 'MatriculaController@vincular', 'as' => 'vincular.usuario']);
+        Route::delete('{disciplina}/desvincular/{usuario}/{recurso?}', ['uses' => 'MatriculaController@desvincular', 'as' => 'desvincular.usuario']);
     });
 
 });
@@ -74,4 +75,4 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', ['uses' => 'HomeController@index', 'as' => 'home']);

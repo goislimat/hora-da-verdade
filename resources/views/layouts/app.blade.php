@@ -38,23 +38,26 @@
                     </a>
                 </div>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/home') }}">Home</a></li>
-                        <li><a href="{{ route('index.curso') }}">Cursos</a></li>
-                        <li><a href="{{ route('index.usuario') }}">Usuários</a></li>
-                        <li><a href="{{ route('index.disciplina') }}">Disciplinas</a></li>
-                    </ul>
+                @if (!Auth::guest())
+                    <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                        <!-- Left Side Of Navbar -->
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (!Auth::guest())
+                        <ul class="nav navbar-nav">
+                            <li><a href="{{ url('/home') }}">Home</a></li>
+                            @if(Auth::user()->tipo == 1)
+                                <li><a href="{{ route('index.curso') }}">Cursos</a></li>
+                                <li><a href="{{ route('index.usuario') }}">Usuários</a></li>
+                            @endif
+                            <li><a href="{{ route('index.disciplina') }}">Disciplinas</a></li>
+                        </ul>
+
+                        <!-- Right Side Of Navbar -->
+                        <ul class="nav navbar-nav navbar-right">
+                            <!-- Authentication Links -->
                             <li><a href="{{ url('/logout') }}">Sair <i class="fa fa-btn fa-sign-out fonte-vinho"></i></a></li>
-                        @endif
-                    </ul>
-                </div>
+                        </ul>
+                    </div>
+                @endif
             </div>
         </nav>
 
@@ -84,7 +87,7 @@
                                 <strong class="fonte-verde">Tipo de Usuário: </strong>
                                     @if(Auth::user()->tipo == 1)
                                         Administrador
-                                    @elseif(Auth::user()->tipo == 1)
+                                    @elseif(Auth::user()->tipo == 2)
                                         Professor
                                     @else
                                         Aluno

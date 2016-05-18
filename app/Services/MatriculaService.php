@@ -73,4 +73,9 @@ class MatriculaService
                 return ['erro' => true, 'mensagem' => 'O cadastramento falhou', 'solucao' => ['Esse aluno já se encontra matriculado na disciplina no período selecionado.']];
         }
     }
+
+    public function desvincular($disciplinaId, $usuarioId, $periodo)
+    {
+        $this->disciplinaRepository->find($disciplinaId)->usuarios()->newPivotStatementForId($usuarioId)->wherePeriodo($periodo)->delete();
+    }
 }

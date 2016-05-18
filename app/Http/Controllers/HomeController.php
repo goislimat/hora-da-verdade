@@ -21,6 +21,11 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
         $this->auth = $auth;
+
+        if(session()->get('user') == null)
+        {
+            session()->put('user', \Illuminate\Support\Facades\Auth::user());
+        }
     }
 
     /**

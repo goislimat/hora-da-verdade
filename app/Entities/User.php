@@ -31,6 +31,11 @@ class User extends Authenticatable
 
     public function disciplinas()
     {
-        return $this->belongsToMany(Disciplina::class, 'aluno_disciplinas', 'user_id', 'disciplina_id')->withPivot('periodo');
+        return $this->belongsToMany(Disciplina::class, 'aluno_disciplinas', 'user_id', 'disciplina_id');//->withPivot('periodo');
+    }
+
+    public function disciplinasUsuarioNoSemestre()
+    {
+        return $this->disciplinas()->wherePivot('periodo', '=', '2016/1');
     }
 }

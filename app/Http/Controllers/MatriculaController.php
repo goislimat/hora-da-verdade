@@ -36,10 +36,18 @@ class MatriculaController extends Controller
         $this->disciplinaRepository = $disciplinaRepository;
         $this->userRepository = $userRepository;
         $this->matriculaService = $matriculaService;
+
+        if(session()->get('user') == null)
+        {
+            session()->put('user', \Illuminate\Support\Facades\Auth::user());
+        }
     }
 
     public function matricularAluno($id)
     {
+        if(session()->get('user.tipo') == 3)
+            return redirect()->route('index.disciplina');
+
         $disciplina = $this->disciplinaRepository->find($id);
         $usuarios = $this->userRepository->findWhere(['curso_id' => $disciplina->curso->id])->lists('nome', 'id');
 
@@ -48,6 +56,9 @@ class MatriculaController extends Controller
 
     public function vincularProfessor($id)
     {
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('index.disciplina');
+
         $disciplina = $this->disciplinaRepository->find($id);
         $usuarios = $this->userRepository->findWhere(['tipo' => 2])->lists('nome', 'id');
 
@@ -61,15 +72,34 @@ class MatriculaController extends Controller
      */
     public function vincular(MatriculaRequest $request, $id)
     {
+        if(session()->get('user.tipo') == 3)
+            return redirect()->route('index.disciplina');
+
         $erro = $this->matriculaService->vincular($request->all());
 
         if(!$erro['erro'])
             return redirect()->route('mostrar.disciplina', array($id));
         else
         {
-            $disciplina = $this->disciplinaRepository->find($id);
+            //$disciplina = $this->disciplinaRepository->find($id);
 
             //coloca variaveis na seção para que seja mostrado no flash message e só faz o redirecionamento
+            return redirect()->route('mostrar.disciplina', array($id));
         }
+    }
+
+    public function desvincular(Request $request, $disciplinaId, $usuarioId, $recurso = null)
+    {
+        if(session()->get('user.tipo') == 3)
+            return redirect()->route('index.disciplina');
+
+        $this->matriculaService->desvincular($disciplinaId, $usuarioId, $request->periodo);
+
+        if($recurso == null)
+            return redirect()->route('mostrar.disciplina', array($disciplinaId));
+        else if($recurso == 'professores')
+            return redirect()->route('professores.disciplina', array($disciplinaId));
+        else
+            return redirect()->route('alunos.disciplina', array($disciplinaId));
     }
 }

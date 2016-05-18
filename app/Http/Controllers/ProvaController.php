@@ -36,6 +36,11 @@ class ProvaController extends Controller
         $this->provaRepository = $provaRepository;
         $this->disciplinaRepository = $disciplinaRepository;
         $this->provaService = $provaService;
+
+        if(session()->get('user') == null)
+        {
+            session()->put('user', \Illuminate\Support\Facades\Auth::user());
+        }
     }
 
     /**

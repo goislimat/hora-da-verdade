@@ -30,6 +30,11 @@ class CursoController extends Controller
     {
         $this->cursoRepository = $cursoRepository;
         $this->cursoService = $cursoService;
+
+        if(session()->get('user') == null)
+        {
+            session()->put('user', \Illuminate\Support\Facades\Auth::user());
+        }
     }
 
     /**
@@ -39,8 +44,10 @@ class CursoController extends Controller
      */
     public function index()
     {
-        $cursos = $this->cursoService->index();
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
 
+        $cursos = $this->cursoService->index();
         return view('curso.index', compact('cursos'));
     }
 
@@ -51,6 +58,9 @@ class CursoController extends Controller
      */
     public function create()
     {
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
+
         return view('curso.novo');
     }
 
@@ -62,8 +72,10 @@ class CursoController extends Controller
      */
     public function store(CursoRequest $request)
     {
-        $this->cursoRepository->create($request->all());
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
 
+        $this->cursoRepository->create($request->all());
         return redirect()->route('index.curso');
     }
 
@@ -75,8 +87,10 @@ class CursoController extends Controller
      */
     public function show($id)
     {
-        $curso = $this->cursoService->show($id);
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
 
+        $curso = $this->cursoService->show($id);
         return view('curso.mostrar', compact('curso'));
     }
 
@@ -88,8 +102,10 @@ class CursoController extends Controller
      */
     public function edit($id)
     {
-        $curso = $this->cursoRepository->find($id);
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
 
+        $curso = $this->cursoRepository->find($id);
         return view('curso.editar', compact('curso'));
     }
 
@@ -102,8 +118,10 @@ class CursoController extends Controller
      */
     public function update(CursoRequest $request, $id)
     {
-        $this->cursoRepository->update($request->all(), $id);
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
 
+        $this->cursoRepository->update($request->all(), $id);
         return redirect()->route('index.curso');
     }
 
@@ -115,6 +133,9 @@ class CursoController extends Controller
      */
     public function destroy($id)
     {
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
+
         try
         {
             $this->cursoRepository->delete($id);
@@ -140,8 +161,10 @@ class CursoController extends Controller
 
     public function buscar(Request $request)
     {
-        $cursos = $this->cursoService->buscar($request->campo, $request->valor);
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
 
+        $cursos = $this->cursoService->buscar($request->campo, $request->valor);
         return view('curso.index', compact('cursos'));
     }
 }

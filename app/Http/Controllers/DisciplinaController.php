@@ -9,6 +9,7 @@ use Verdade\Http\Requests\DisciplinaRequest;
 use Verdade\Repositories\CursoRepository;
 use Verdade\Repositories\DisciplinaRepository;
 use Verdade\Services\DisciplinaService;
+use DB;
 
 class DisciplinaController extends Controller
 {
@@ -36,6 +37,11 @@ class DisciplinaController extends Controller
         $this->disciplinaRepository = $disciplinaRepository;
         $this->disciplinaService = $disciplinaService;
         $this->cursoRepository = $cursoRepository;
+
+        if(session()->get('user') == null)
+        {
+            session()->put('user', \Illuminate\Support\Facades\Auth::user());
+        }
     }
     
     /**
@@ -45,8 +51,14 @@ class DisciplinaController extends Controller
      */
     public function index()
     {
-        $disciplinas = $this->disciplinaRepository->all();
-        
+        if(session()->get('user.tipo') == 1)
+            $disciplinas = $this->disciplinaRepository->all();
+        else
+        {
+            $user = session()->get('user');
+            $disciplinas = $user->disciplinasUsuarioNoSemestre;
+        }
+
         return view('disciplina.index', compact('disciplinas'));
     }
 
@@ -57,6 +69,9 @@ class DisciplinaController extends Controller
      */
     public function create($cursoId = null)
     {
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('index.disciplina');
+
         if($cursoId == null)
         {
             $cursos = $this->cursoRepository->lists('nome', 'id');
@@ -75,8 +90,10 @@ class DisciplinaController extends Controller
      */
     public function store(DisciplinaRequest $request)
     {
-        $this->disciplinaRepository->create($request->all());
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('index.disciplina');
 
+        $this->disciplinaRepository->create($request->all());
         return redirect()->route('index.disciplina');
     }
 
@@ -88,6 +105,21 @@ class DisciplinaController extends Controller
      */
     public function show($id)
     {
+        if(session()->get('user.tipo') != 1)
+        {
+            $buscaUsuarioDisciplina = DB::table('disciplinas')
+                ->join('aluno_disciplinas', 'disciplinas.id', '=', 'aluno_disciplinas.disciplina_id')
+                ->join('users', 'aluno_disciplinas.user_id', '=', 'users.id')
+                ->join('cursos', 'disciplinas.curso_id', '=', 'cursos.id')
+                ->where('periodo', date('Y') . '/' . ((date('m') > 6) ? '2': '1'))
+                ->where('users.id', session()->get('user.id'))
+                ->where('disciplinas.id', $id)
+                ->count();
+
+            if($buscaUsuarioDisciplina == 0)
+                return redirect()->route('index.disciplina');
+        }
+
         $disciplina = $this->disciplinaService->show($id);
 
         return view('disciplina.mostrar', compact('disciplina'));
@@ -101,6 +133,9 @@ class DisciplinaController extends Controller
      */
     public function edit($id)
     {
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('index.disciplina');
+
         $disciplina = $this->disciplinaRepository->find($id);
         $cursos = $this->cursoRepository->lists('nome', 'id');
 
@@ -116,8 +151,10 @@ class DisciplinaController extends Controller
      */
     public function update(DisciplinaRequest $request, $id)
     {
-        $this->disciplinaRepository->update($request->all(), $id);
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('index.disciplina');
 
+        $this->disciplinaRepository->update($request->all(), $id);
         return redirect()->route('index.disciplina');
     }
 
@@ -129,29 +166,41 @@ class DisciplinaController extends Controller
      */
     public function destroy($id)
     {
-        $this->disciplinaRepository->delete($id);
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('index.disciplina');
 
+        $this->disciplinaRepository->delete($id);
         return redirect()->route('index.disciplina');
     }
     
     public function buscar(Request $request)
     {
-        $disciplinas = $this->disciplinaService->buscar($request->campo, $request->valor);
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('index.disciplina');
 
+        $disciplinas = $this->disciplinaService->buscar($request->campo, $request->valor);
         return view('disciplina.index', compact('disciplinas'));
     }
 
     public function professores($id)
     {
-        $disciplina = $this->disciplinaService->professores($id);
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('index.disciplina');
 
-        return view('disciplina.todos_professores', compact('disciplina'));
+        $disciplina = $this->disciplinaService->professores($id);
+        $recurso = 'professores';
+
+        return view('disciplina.todos_professores', compact('disciplina', 'recurso'));
     }
 
     public function alunos($id)
     {
-        $disciplina = $this->disciplinaService->alunos($id);
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('index.disciplina');
 
-        return view('disciplina.todos_alunos', compact('disciplina'));
+        $disciplina = $this->disciplinaService->alunos($id);
+        $recurso = 'alunos';
+
+        return view('disciplina.todos_alunos', compact('disciplina', 'recurso'));
     }
 }

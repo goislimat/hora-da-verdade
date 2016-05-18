@@ -23,7 +23,7 @@
 
     @endif
 
-    <h2 class="fonte-vinho">#{{ $disciplina->id }} - {{ $disciplina->nome }}</h2>
+    <a href="{{ route('mostrar.disciplina', $disciplina->id) }}"><h2 class="fonte-vinho">#{{ $disciplina->id }} - {{ $disciplina->nome }}</h2></a>
     <h4>Disciplina do {{ $disciplina->semestre }}º semestre de {{ $disciplina->curso->nome }}</h4>
 
     <hr>

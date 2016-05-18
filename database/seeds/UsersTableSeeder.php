@@ -21,6 +21,22 @@ class UsersTableSeeder extends Seeder
             'tipo' => 1,
         ]);
 
+        \Verdade\Entities\User::create([
+            'nome' => 'Professor',
+            'email' => 'professor@email.com',
+            'password' => bcrypt(123456),
+            'remember_token' => str_random(10),
+            'tipo' => 2,
+        ]);
+
+        \Verdade\Entities\User::create([
+            'nome' => 'Aluno',
+            'email' => 'aluno@email.com',
+            'password' => bcrypt(123456),
+            'remember_token' => str_random(10),
+            'tipo' => 3,
+        ]);
+
         factory(\Verdade\Entities\User::class, 500)->create();
     }
 }

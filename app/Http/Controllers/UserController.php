@@ -37,6 +37,11 @@ class UserController extends Controller
         $this->userRepository = $userRepository;
         $this->userService = $userService;
         $this->cursoRepository = $cursoRepository;
+
+        if(session()->get('user') == null)
+        {
+            session()->put('user', \Illuminate\Support\Facades\Auth::user());
+        }
     }
 
     /**
@@ -46,6 +51,9 @@ class UserController extends Controller
      */
     public function index()
     {
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
+
         $usuarios = $this->userService->index();
 
         return view('usuario.index', compact('usuarios'));
@@ -58,6 +66,9 @@ class UserController extends Controller
      */
     public function create($recurso = null, $cursoId = null)
     {
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
+
         if($cursoId == null)
         {
             $cursos = $this->cursoRepository->lists('nome', 'id');
@@ -76,6 +87,9 @@ class UserController extends Controller
      */
     public function store(UserRequest $request, $recurso = null, $recursoId = null)
     {
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
+
         $this->userService->store($request->all());
 
         if($recurso == null)
@@ -92,8 +106,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $usuario = $this->userService->show($id);
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
 
+        $usuario = $this->userService->show($id);
         return view('usuario.mostrar', compact('usuario'));
     }
 
@@ -105,6 +121,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
+
         $usuario = $this->userRepository->find($id);
         $cursos = $this->cursoRepository->lists('nome', 'id');
 
@@ -120,6 +139,9 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
+
         $this->userRepository->update($request->all(), $id);
 
         return redirect()->route('index.usuario');
@@ -133,6 +155,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
+
         try
         {
             $this->userRepository->delete($id);
@@ -158,6 +183,9 @@ class UserController extends Controller
 
     public function buscar(Request $request)
     {
+        if(session()->get('user.tipo') != 1)
+            return redirect()->route('home');
+
         $usuarios = $this->userService->buscar($request->campo, $request->valor);
 
         return view('usuario.index', compact('usuarios'));

@@ -2,14 +2,18 @@
 
 @section('content')
 
-    <div class="text-right">
-        <a href="{{ route('novo.disciplina') }}" class="btn btn-link fonte-verde"><span class="glyphicon glyphicon-plus"></span> Adicionar</a>
-    </div>
+    @if(session()->get('user.tipo') == 1)
+        <div class="text-right">
+            <a href="{{ route('novo.disciplina') }}" class="btn btn-link fonte-verde"><span class="glyphicon glyphicon-plus"></span> Adicionar</a>
+        </div>
+    @endif
 
     <div class="grupo clearfix">
         <a href="{{ route('index.disciplina') }}" class="btn btn-link fonte-vinho"><h2>Lista de Disciplinas</h2></a>
 
-        @include('disciplina.helpers._form_busca')
+        @if(session()->get('user.tipo') == 1)
+            @include('disciplina.helpers._form_busca')
+        @endif
 
         @if(isset($disciplinas['erro']))
             <div class="bg-danger clearfix">
