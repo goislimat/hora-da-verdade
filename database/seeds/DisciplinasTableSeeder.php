@@ -13,6 +13,6 @@ class DisciplinasTableSeeder extends Seeder
     {
         \Verdade\Entities\Disciplina::truncate();
 
-        factory(\Verdade\Entities\Disciplina::class, 50)->create();
+        factory(\Verdade\Entities\Disciplina::class, 160)->create();
     }
 }

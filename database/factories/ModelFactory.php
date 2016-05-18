@@ -17,11 +17,12 @@ $factory->define(Verdade\Entities\User::class, function (Faker\Generator $faker)
         'email' => $faker->safeEmail,
         'password' => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
-        'tipo' => $faker->numberBetween(1, 3),
+        'tipo' => $faker->numberBetween(2, 10),
     ];
 
-    if($hash['tipo'] == 3)
+    if($hash['tipo'] >= 3)
     {
+        $hash['tipo'] = 3;
         $hash['curso_id'] = Verdade\Entities\Curso::all()->random()->id;
     }
 

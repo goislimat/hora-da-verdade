@@ -13,6 +13,6 @@ class ProvasTableSeeder extends Seeder
     {
         \Verdade\Entities\Prova::truncate();
 
-        factory(\Verdade\Entities\Prova::class, 100)->create();
+        factory(\Verdade\Entities\Prova::class, 1000)->create();
     }
 }

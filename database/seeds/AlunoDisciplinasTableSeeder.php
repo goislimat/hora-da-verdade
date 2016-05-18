@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use DB;
 
 class AlunoDisciplinasTableSeeder extends Seeder
 {
@@ -14,7 +13,7 @@ class AlunoDisciplinasTableSeeder extends Seeder
     {
         DB::table('aluno_disciplinas')->truncate();
 
-        for($i = 0; $i < 100; $i++)
+        for($i = 0; $i < 1000; $i++)
         {
             while(true)
             {

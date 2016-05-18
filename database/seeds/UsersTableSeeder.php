@@ -21,6 +21,6 @@ class UsersTableSeeder extends Seeder
             'tipo' => 1,
         ]);
 
-        factory(\Verdade\Entities\User::class, 10)->create();
+        factory(\Verdade\Entities\User::class, 500)->create();
     }
 }

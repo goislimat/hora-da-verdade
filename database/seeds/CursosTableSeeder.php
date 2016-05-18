@@ -13,6 +13,6 @@ class CursosTableSeeder extends Seeder
     {
         \Verdade\Entities\Curso::truncate();
 
-        factory(\Verdade\Entities\Curso::class, 10)->create();
+        factory(\Verdade\Entities\Curso::class, 4)->create();
     }
 }
