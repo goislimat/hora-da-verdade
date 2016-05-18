@@ -15,13 +15,13 @@ class Curso extends Model implements Transformable
         'tipo',
     ];
 
-    public function usuarios()
+    public function alunos()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class)->orderBy('nome');
     }
 
     public function disciplinas()
     {
-        return $this->hasMany(Disciplina::class);
+        return $this->hasMany(Disciplina::class)->orderBy('semestre')->orderBy('nome');
     }
 }

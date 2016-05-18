@@ -27,9 +27,9 @@
     <h4>{{ $curso->tipo }}</h4>
 
     <hr>
-
-    <p>quaisquer tabelas adicionais</p>
-
+    @include('curso._alunos')
+    <hr>
+    @include('curso._disciplinas')
     <hr>
 
     @include('curso.helpers._manutencao')

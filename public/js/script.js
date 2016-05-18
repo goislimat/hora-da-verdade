@@ -30,8 +30,19 @@ function toggleNotificacaoInfo(value)
         $('.notificacao-info').removeClass('show').addClass('hide');
 }
 
-$("input[name=notificar]:radio").change(function() {
+$('input[name=notificar]:radio').change(function() {
     toggleNotificacaoInfo(this.value);
+});
+
+$('.opcional-header').on('click', function() {
+    var clicked = $(this);
+    var icon = clicked.children('.glyphicon');
+
+    clicked.next('.opcional').slideToggle();
+
+    (icon.hasClass('glyphicon-chevron-down'))
+        ? icon.removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up')
+        : icon.removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
 });
 
 //Definições de máscara

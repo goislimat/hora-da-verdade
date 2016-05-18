@@ -56,11 +56,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($recurso = null, $cursoId = null)
     {
-        $cursos = $this->cursoRepository->lists('nome', 'id');
+        if($cursoId == null)
+        {
+            $cursos = $this->cursoRepository->lists('nome', 'id');
+            return view('usuario.novo', compact('cursos'));
+        }
 
-        return view('usuario.novo', compact('cursos'));
+        $curso = $this->cursoRepository->find($cursoId);
+        return view('usuario.novo', compact('curso', 'recurso'));
     }
 
     /**
@@ -69,11 +74,14 @@ class UserController extends Controller
      * @param Request|UserRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(UserRequest $request, $recurso = null, $recursoId = null)
     {
         $this->userService->store($request->all());
 
-        return redirect()->route('index.usuario');
+        if($recurso == null)
+            return redirect()->route('index.usuario');
+        else if($recurso == 'curso')
+            return redirect()->route('mostrar.curso', $recursoId);
     }
 
     /**

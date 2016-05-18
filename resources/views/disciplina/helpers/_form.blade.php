@@ -28,7 +28,12 @@
 
     <div class="form-group">
         {{ Form::label('curso_id', 'Curso:', array('class' => 'control-label')) }}
-        {{ Form::select('curso_id', $cursos, old('curso_id'), array('class' => 'form-control')) }}
+        @if(isset($curso))
+            {{ Form::text('curso', $curso->nome, array('class' => 'form-control', 'readonly' => 'readonly')) }}
+            {{ Form::hidden('curso_id', $curso->id) }}
+        @else
+            {{ Form::select('curso_id', $cursos, old('curso_id'), array('class' => 'form-control')) }}
+        @endif
     </div>
 
     <div class="form-group text-right">

@@ -25,13 +25,10 @@
 
     <h2 class="fonte-vinho">#{{ $disciplina->id }} - {{ $disciplina->nome }}</h2>
     <h4>Disciplina do {{ $disciplina->semestre }}º semestre de {{ $disciplina->curso->nome }}</h4>
-    <h5>Disciplina lecionada por: {!! ($disciplina->professor != null) ? $disciplina->professor->nome : '<span class="fonte-vinho">Disciplina não possui professor para '. $disciplina->periodo_atual .'</span>' !!}</h5>
 
     <hr>
-    <h3 class="opcional-header">Lista de <span class="fonte-verde-claro">alunos</span> matriculados em {{ $disciplina->nome }} no período {{ $disciplina->periodo_atual }} <span class="glyphicon glyphicon-chevron-down"></span></h3>
+    <h3 class="opcional-header">Lista de todos os <span class="fonte-verde-claro">alunos</span> já matriculados em {{ $disciplina->nome }} <span class="glyphicon glyphicon-chevron-down"></span></h3>
     @include('disciplina._usuarios')
-    <hr>
-    @include('disciplina._provas')
     <hr>
 
     @include('disciplina.helpers._manutencao')

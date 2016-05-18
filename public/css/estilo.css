@@ -53,6 +53,15 @@ body {
     font-size: 10px;
 }
 
+.opcional-header {
+    cursor: pointer;
+}
+
+h3 .glyphicon {
+    font-size: 18px;
+    color: #F24C27;
+}
+
 .bg-danger {
     background-color: #F24C27 !important;
     padding: 20px;
@@ -69,6 +78,10 @@ a:hover {
 
 .fonte-verde {
     color: #024959 !important;
+}
+
+.fonte-verde-claro {
+    color: #037e8c !important;
 }
 
 .clearfix {

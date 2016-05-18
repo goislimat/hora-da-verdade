@@ -27,6 +27,36 @@ class DisciplinaService
         $this->disciplinaRepository = $disciplinaRepository;
     }
 
+    public function show($id)
+    {
+        $disciplina = $this->disciplinaRepository->find($id);
+
+        $disciplina['professor'] = null;
+        $alunos = array();
+        $semestre = date('Y') . '/' . ((date('m') > 6) ? '2': '1');
+        $disciplina['periodo_atual'] = $semestre;
+
+        foreach($disciplina->usuarios as $usuario)
+        {
+            if($usuario->pivot->periodo == $semestre)
+            {
+                if($usuario->tipo == 3)
+                {
+                    array_push($alunos, $usuario);
+                }
+                else if($usuario->tipo == 2)
+                {
+                    $disciplina['professor'] = $usuario;
+                }
+            }
+        }
+
+        $disciplina->usuarios = $alunos;
+        $disciplina['quantidade'] = count($disciplina->usuarios);
+
+        return $disciplina;
+    }
+
     public function buscar($campo, $valor)
     {
         if($valor == null)
@@ -41,5 +71,45 @@ class DisciplinaService
             return $disciplinas;
         else
             return ['erro' => 'A consulta realizada não retornou nenhum resultado.'];
+    }
+
+    public function professores($id)
+    {
+        $disciplina = $this->disciplinaRepository->find($id);
+
+        $professores = array();
+
+        foreach($disciplina->usuarios as $usuario)
+        {
+            if($usuario->tipo == 2)
+            {
+                array_push($professores, $usuario);
+            }
+        }
+
+        $disciplina->usuarios = $professores;
+        $disciplina['quantidade'] = count($disciplina->usuarios);
+
+        return $disciplina;
+    }
+
+    public function alunos($id)
+    {
+        $disciplina = $this->disciplinaRepository->find($id);
+
+        $alunos = array();
+
+        foreach($disciplina->usuarios as $usuario)
+        {
+            if($usuario->tipo == 3)
+            {
+                array_push($alunos, $usuario);
+            }
+        }
+
+        $disciplina->usuarios = $alunos;
+        $disciplina['quantidade'] = count($disciplina->usuarios);
+
+        return $disciplina;
     }
 }

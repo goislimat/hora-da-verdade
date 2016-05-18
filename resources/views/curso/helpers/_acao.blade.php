@@ -3,6 +3,9 @@
         <span class="glyphicon glyphicon-cog"></span> Ações
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+        <li>{{ link_to_route('novo.usuario', 'Cadastrar Aluno no Curso', array('curso', $curso->id)) }}</li>
+        <li>{{ link_to_route('novo.disciplina', 'Cadastrar Disciplina no Curso', array($curso->id)) }}</li>
+        <li role="separator" class="divider"></li>
         <li>{{ link_to_route('editar.curso', 'Editar', $curso->id) }}</li>
         <li role="separator" class="divider"></li>
         <li>

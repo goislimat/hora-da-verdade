@@ -55,11 +55,16 @@ class DisciplinaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($cursoId = null)
     {
-        $cursos = $this->cursoRepository->lists('nome', 'id');
+        if($cursoId == null)
+        {
+            $cursos = $this->cursoRepository->lists('nome', 'id');
+            return view('disciplina.novo', compact('cursos'));
+        }
 
-        return view('disciplina.novo', compact('cursos'));
+        $curso = $this->cursoRepository->find($cursoId);
+        return view('disciplina.novo', compact('curso'));
     }
 
     /**
@@ -83,7 +88,7 @@ class DisciplinaController extends Controller
      */
     public function show($id)
     {
-        $disciplina = $this->disciplinaRepository->find($id);
+        $disciplina = $this->disciplinaService->show($id);
 
         return view('disciplina.mostrar', compact('disciplina'));
     }
@@ -134,5 +139,19 @@ class DisciplinaController extends Controller
         $disciplinas = $this->disciplinaService->buscar($request->campo, $request->valor);
 
         return view('disciplina.index', compact('disciplinas'));
+    }
+
+    public function professores($id)
+    {
+        $disciplina = $this->disciplinaService->professores($id);
+
+        return view('disciplina.todos_professores', compact('disciplina'));
+    }
+
+    public function alunos($id)
+    {
+        $disciplina = $this->disciplinaService->alunos($id);
+
+        return view('disciplina.todos_alunos', compact('disciplina'));
     }
 }

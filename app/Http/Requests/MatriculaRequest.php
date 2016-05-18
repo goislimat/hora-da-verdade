@@ -4,7 +4,7 @@ namespace Verdade\Http\Requests;
 
 use Verdade\Http\Requests\Request;
 
-class DisciplinaRequest extends Request
+class MatriculaRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class DisciplinaRequest extends Request
     public function rules()
     {
         return [
-            'nome' => 'required|min:5',
-            'semestre' => 'required|numeric',
-            'curso_id' => 'required',
+            'periodo' => 'required'
         ];
     }
 }

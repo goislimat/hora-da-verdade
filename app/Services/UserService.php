@@ -44,7 +44,7 @@ class UserService
 
     public function store($data)
     {
-        $data['password'] = str_random(8);
+        $data['password'] = bcrypt(str_random(8));
 
         $this->userRepository->create($data);
 

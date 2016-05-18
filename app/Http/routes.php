@@ -17,12 +17,13 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::group(['prefix' => 'usuario'], function() {
         Route::get('', ['uses' => 'UserController@index', 'as' => 'index.usuario']);
-        Route::get('novo', ['uses' => 'UserController@create', 'as' => 'novo.usuario']);
-        Route::post('', ['uses' => 'UserController@store', 'as' => 'armazenar.usuario']);
+        Route::get('novo/{recurso?}/{id?}', ['uses' => 'UserController@create', 'as' => 'novo.usuario']);
+        Route::post('{recurso?}/{id?}', ['uses' => 'UserController@store', 'as' => 'armazenar.usuario']);
         Route::get('{usuario}', ['uses' => 'UserController@show', 'as' => 'mostrar.usuario']);
         Route::get('{usuario}/editar', ['uses' => 'UserController@edit', 'as' => 'editar.usuario']);
         Route::put('{usuario}', ['uses' => 'UserController@update', 'as' => 'atualizar.usuario']);
         Route::delete('{usuario}', ['uses' => 'UserController@delete', 'as' => 'excluir.usuario']);
+
         Route::post('buscar', ['uses' => 'UserController@buscar', 'as' => 'buscar.usuario']);
     });
 
@@ -34,18 +35,24 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('{curso}/editar', ['uses' => 'CursoController@edit', 'as' => 'editar.curso']);
         Route::put('{curso}', ['uses' => 'CursoController@update', 'as' => 'atualizar.curso']);
         Route::delete('{curso}', ['uses' => 'CursoController@destroy', 'as' => 'excluir.curso']);
+
         Route::post('buscar', ['uses' => 'CursoController@buscar', 'as' => 'buscar.curso']);
     });
     
     Route::group(['prefix' => 'disciplina'], function() {
         Route::get('', ['uses' => 'DisciplinaController@index', 'as' => 'index.disciplina']);
-        Route::get('novo', ['uses' => 'DisciplinaController@create', 'as' => 'novo.disciplina']);
+        Route::get('novo/{curso?}', ['uses' => 'DisciplinaController@create', 'as' => 'novo.disciplina']);
         Route::post('', ['uses' => 'DisciplinaController@store', 'as' => 'armazenar.disciplina']);
         Route::get('{disciplina}', ['uses' => 'DisciplinaController@show', 'as' => 'mostrar.disciplina']);
         Route::get('{disciplina}/editar', ['uses' => 'DisciplinaController@edit', 'as' => 'editar.disciplina']);
         Route::put('{disciplina}', ['uses' => 'DisciplinaController@update', 'as' => 'atualizar.disciplina']);
         Route::delete('{disciplina}', ['uses' => 'DisciplinaController@destroy', 'as' => 'excluir.disciplina']);
+
         Route::post('buscar', ['uses' => 'DisciplinaController@buscar', 'as' => 'buscar.disciplina']);
+        Route::get('{disciplina}/professores', ['uses' => 'DisciplinaController@professores', 'as' => 'professores.disciplina']);
+        Route::get('{disciplina}/alunos', ['uses' => 'DisciplinaController@alunos', 'as' => 'alunos.disciplina']);
+
+        //------------------------------------------------------------------------------------------------------//
 
         Route::get('{disciplina}/prova', ['uses' => 'ProvaController@index', 'as' => 'index.prova']);
         Route::get('{disciplina}/prova/novo', ['uses' => 'ProvaController@create', 'as' => 'novo.prova']);
@@ -54,6 +61,12 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('{disciplina}/prova/{prova}/editar', ['uses' => 'ProvaController@edit', 'as' => 'editar.prova']);
         Route::put('{disciplina}/prova/{prova}', ['uses' => 'ProvaController@update', 'as' => 'atualizar.prova']);
         Route::delete('{disciplina}/prova/{prova}', ['uses' => 'ProvaController@destroy', 'as' => 'excluir.prova']);
+
+        //------------------------------------------------------------------------------------------------------//
+
+        Route::get('{disciplina}/matricular', ['uses' => 'MatriculaController@matricularAluno', 'as' => 'matricular.aluno']);
+        Route::get('{disciplina}/vincular', ['uses' => 'MatriculaController@vincularProfessor', 'as' => 'vincular.professor']);
+        Route::post('{disciplina}/vincular', ['uses' => 'MatriculaController@vincular', 'as' => 'vincular.usuario']);
     });
 
 });

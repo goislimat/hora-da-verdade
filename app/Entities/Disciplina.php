@@ -26,7 +26,7 @@ class Disciplina extends Model implements Transformable
      */
     public function usuarios()
     {
-        return $this->belongsToMany(User::class, 'aluno_disciplinas', 'disciplina_id', 'user_id')->withPivot('periodo');
+        return $this->belongsToMany(User::class, 'aluno_disciplinas', 'disciplina_id', 'user_id')->withPivot('periodo')->orderBy('periodo', 'desc');
     }
 
     public function provas()
