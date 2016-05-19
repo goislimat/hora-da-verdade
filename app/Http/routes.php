@@ -69,6 +69,10 @@ Route::group(['middleware' => 'auth'], function() {
 
             Route::get('{prova}/questao/create', ['uses' => 'QuestaoController@create', 'as' => 'novo.questao']);
             Route::post('{prova}/questao', ['uses' => 'QuestaoController@store', 'as' => 'armazenar.questao']);
+            Route::get('{prova}/questao/{questao}', ['uses' => 'QuestaoController@show', 'as' => 'mostrar.questao']);
+            Route::get('{prova}/questao/{questao}/editar', ['uses' => 'QuestaoController@edit', 'as' => 'editar.questao']);
+            Route::put('{prova}/questao/{questao}', ['uses' => 'QuestaoController@update', 'as' => 'atualizar.questao']);
+            Route::delete('{prova}/questao/{questao}', ['uses' => 'QuestaoController@destroy', 'as' => 'excluir.questao']);
         });
 
         //------------------------------------------------------------------------------------------------------//

@@ -14,7 +14,7 @@
             @foreach($prova->questoes as $questao)
                 <tr>
                     <td>{{ $questao->ordem }}</td>
-                    <td><span class="glyphicon glyphicon-link"></span> {{ $questao->pergunta }}</td>
+                    <td><span class="glyphicon glyphicon-link"></span> {{ link_to_route('mostrar.questao', substr($questao->pergunta, 0, 40), array($questao->prova->disciplina_id, $questao->prova_id, $questao->id)) }}</td>
                     <td>{{ $questao->tipo }}</td>
                 </tr>
             @endforeach
