@@ -25,4 +25,9 @@ class Questao extends Model implements Transformable
         return $this->belongsTo(Prova::class);
     }
 
+    public function opcoes()
+    {
+        return $this->hasMany(Opcao::class)->orderBy('ordem');
+    }
+
 }

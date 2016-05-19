@@ -40,7 +40,7 @@ class ProvaService
 
         foreach($prova->questoes as $questao)
         {
-            $questao->tipo = $this->getTipoComoTexto($questao->tipo);
+            $questao->tipo_texto = $this->getTipoComoTexto($questao->tipo);
         }
 
         return $prova;

@@ -26,9 +26,9 @@ class QuestaoRequest extends Request
         return [
             'prova_id' => 'required',
             'pergunta' => 'required|min:5',
-            'ordem' => 'required|number',
+            'ordem' => 'required|numeric',
             'tipo' => 'required',
-            'peso' => 'number',
+            'peso' => 'numeric',
         ];
     }
 }

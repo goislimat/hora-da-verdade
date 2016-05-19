@@ -31,7 +31,7 @@ class QuestaoService
     {
         $questao = $this->questaoRepository->find($id);
 
-        $questao->tipo = $this->getTipoComoTexto($questao->tipo);
+        $questao->tipo_texto = $this->getTipoComoTexto($questao->tipo);
 
         return $questao;
     }

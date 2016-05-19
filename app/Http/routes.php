@@ -67,12 +67,20 @@ Route::group(['middleware' => 'auth'], function() {
             Route::put('{prova}', ['uses' => 'ProvaController@update', 'as' => 'atualizar.prova']);
             Route::delete('{prova}', ['uses' => 'ProvaController@destroy', 'as' => 'excluir.prova']);
 
-            Route::get('{prova}/questao/create', ['uses' => 'QuestaoController@create', 'as' => 'novo.questao']);
-            Route::post('{prova}/questao', ['uses' => 'QuestaoController@store', 'as' => 'armazenar.questao']);
-            Route::get('{prova}/questao/{questao}', ['uses' => 'QuestaoController@show', 'as' => 'mostrar.questao']);
-            Route::get('{prova}/questao/{questao}/editar', ['uses' => 'QuestaoController@edit', 'as' => 'editar.questao']);
-            Route::put('{prova}/questao/{questao}', ['uses' => 'QuestaoController@update', 'as' => 'atualizar.questao']);
-            Route::delete('{prova}/questao/{questao}', ['uses' => 'QuestaoController@destroy', 'as' => 'excluir.questao']);
+            Route::group(['prefix' => '{prova}/questao'], function() {
+                Route::get('create', ['uses' => 'QuestaoController@create', 'as' => 'novo.questao']);
+                Route::post('', ['uses' => 'QuestaoController@store', 'as' => 'armazenar.questao']);
+                Route::get('{questao}', ['uses' => 'QuestaoController@show', 'as' => 'mostrar.questao']);
+                Route::get('{questao}/editar', ['uses' => 'QuestaoController@edit', 'as' => 'editar.questao']);
+                Route::put('{questao}', ['uses' => 'QuestaoController@update', 'as' => 'atualizar.questao']);
+                Route::delete('{questao}', ['uses' => 'QuestaoController@destroy', 'as' => 'excluir.questao']);
+
+//                Route::get('{questao}/create', ['uses' => 'OpcaoController@create', 'as' => 'novo.questao']);
+                Route::post('{questao}/opcao', ['uses' => 'OpcaoController@store', 'as' => 'armazenar.opcao']);
+                Route::get('{questao}/opcao/{opcao}/editar', ['uses' => 'OpcaoController@edit', 'as' => 'editar.opcao']);
+                Route::put('{questao}/opcao/{opcao}', ['uses' => 'OpcaoController@update', 'as' => 'atualizar.opcao']);
+                Route::delete('{questao}/opcao/{opcao}', ['uses' => 'OpcaoController@destroy', 'as' => 'excluir.opcao']);
+            });
         });
 
         //------------------------------------------------------------------------------------------------------//

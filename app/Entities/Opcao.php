@@ -18,4 +18,8 @@ class Opcao extends Model implements Transformable
 		'questao_id',
 	];
 
+	public function questao()
+	{
+		return $this->belongsTo(Questao::class);
+	}
 }
