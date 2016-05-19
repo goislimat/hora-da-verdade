@@ -89,7 +89,7 @@ class ProvaController extends Controller
      */
     public function show($disciplinaId, $id)
     {
-        $prova = $this->provaRepository->find($id);
+        $prova = $this->provaService->show($id);
         $disciplina = $this->disciplinaRepository->find($disciplinaId);
 
         return view('prova.mostrar', compact('prova', 'disciplina'));

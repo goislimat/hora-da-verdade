@@ -58,13 +58,18 @@ Route::group(['middleware' => 'auth'], function() {
 
         //------------------------------------------------------------------------------------------------------//
 
-        Route::get('{disciplina}/prova', ['uses' => 'ProvaController@index', 'as' => 'index.prova']);
-        Route::get('{disciplina}/prova/novo', ['uses' => 'ProvaController@create', 'as' => 'novo.prova']);
-        Route::post('{disciplina}/prova', ['uses' => 'ProvaController@store', 'as' => 'armazenar.prova']);
-        Route::get('{disciplina}/prova/{prova}', ['uses' => 'ProvaController@show', 'as' => 'mostrar.prova']);
-        Route::get('{disciplina}/prova/{prova}/editar', ['uses' => 'ProvaController@edit', 'as' => 'editar.prova']);
-        Route::put('{disciplina}/prova/{prova}', ['uses' => 'ProvaController@update', 'as' => 'atualizar.prova']);
-        Route::delete('{disciplina}/prova/{prova}', ['uses' => 'ProvaController@destroy', 'as' => 'excluir.prova']);
+        Route::group(['prefix' => '{disciplina}/prova'], function() {
+            Route::get('', ['uses' => 'ProvaController@index', 'as' => 'index.prova']);
+            Route::get('novo', ['uses' => 'ProvaController@create', 'as' => 'novo.prova']);
+            Route::post('', ['uses' => 'ProvaController@store', 'as' => 'armazenar.prova']);
+            Route::get('{prova}', ['uses' => 'ProvaController@show', 'as' => 'mostrar.prova']);
+            Route::get('{prova}/editar', ['uses' => 'ProvaController@edit', 'as' => 'editar.prova']);
+            Route::put('{prova}', ['uses' => 'ProvaController@update', 'as' => 'atualizar.prova']);
+            Route::delete('{prova}', ['uses' => 'ProvaController@destroy', 'as' => 'excluir.prova']);
+
+            Route::get('{prova}/questao/create', ['uses' => 'QuestaoController@create', 'as' => 'novo.questao']);
+            Route::post('{prova}/questao', ['uses' => 'QuestaoController@store', 'as' => 'armazenar.questao']);
+        });
 
         //------------------------------------------------------------------------------------------------------//
 

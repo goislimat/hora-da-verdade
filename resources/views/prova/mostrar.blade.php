@@ -36,7 +36,7 @@
         @endif
     <hr>
 
-    <p>quaisquer tabelas adicionais</p>
+    @include('prova._questoes')
 
     <hr>
 

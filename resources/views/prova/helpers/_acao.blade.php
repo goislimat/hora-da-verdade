@@ -3,8 +3,12 @@
         <span class="glyphicon glyphicon-cog"></span> Ações
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+        <li>{{ link_to_route('novo.questao', 'Adicionar Questão', array($disciplina->id, $prova->id)) }}</li>
+        <li role="separator" class="divider"></li>
+
         <li>{{ link_to_route('editar.prova', 'Editar', array($disciplina->id, $prova->id)) }}</li>
         <li role="separator" class="divider"></li>
+
         <li>
             {{ Form::open(array('route' => array('excluir.prova', $disciplina->id, $prova->id), 'method' => 'delete', 'class' => 'form-delete')) }}
             {{ Form::submit('Excluir', array('class' => 'btn btn-danger btn-sm col-md-offset-1 col-md-10')) }}

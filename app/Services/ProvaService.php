@@ -34,6 +34,18 @@ class ProvaService
         $this->provaRepository->create($data);
     }
 
+    public function show($id)
+    {
+        $prova = $this->provaRepository->find($id);
+
+        foreach($prova->questoes as $questao)
+        {
+            $questao->tipo = $this->getTipoComoTexto($questao->tipo);
+        }
+
+        return $prova;
+    }
+
     public function edit($id)
     {
         $prova = $this->provaRepository->find($id);
@@ -73,5 +85,15 @@ class ProvaService
         $data['data'] = date_format(date_create($data['data']), 'Y-m-d');
 
         return $data;
+    }
+
+    private function getTipoComoTexto($tipo)
+    {
+        if($tipo == 1)
+            return 'Discursiva';
+        elseif($tipo == 2)
+            return 'Múltipla Escolha';
+        else
+            return 'V ou F';
     }
 }

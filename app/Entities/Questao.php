@@ -13,7 +13,7 @@ class Questao extends Model implements Transformable
     protected $table = 'questoes';
 
     protected $fillable = [
-        'provas_id',
+        'prova_id',
         'pergunta',
         'ordem',
         'tipo',

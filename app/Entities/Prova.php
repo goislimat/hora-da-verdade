@@ -27,7 +27,7 @@ class Prova extends Model implements Transformable
 
     public function questoes()
     {
-        return $this->hasMany(Questao::class);
+        return $this->hasMany(Questao::class)->orderBy('ordem');
     }
 
 }
